@@ -6,7 +6,7 @@ from .scrape import scrape_from_user
 
 def cleanup():
     """Remove tweets.json"""
-    os.remove('data/tweets.json')
+    os.remove('data/tweet_ids.txt')
 
 
 def main():

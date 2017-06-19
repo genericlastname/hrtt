@@ -19,7 +19,7 @@ def load_accounts(path):
         return acc
 
 
-def scrape_from_user(acc, num, path='data/tweets.json'):
+def scrape_from_user(acc, num, path='data/tweet_ids.txt'):
     """Collect tweets from account in `acc` and save them in the file
        `path`"""
     print('Collecting tweets from {}'.format(acc[num]))
@@ -45,6 +45,7 @@ def scrape_from_user(acc, num, path='data/tweets.json'):
 
     with open(path, 'a+') as f:
         for x in range(len(tweets)):
-            f.write(str(tweets[x]._json))
+            f.write(str(tweets[x].id_str))
+            f.write('\n')
 
     print('\nDone.')
