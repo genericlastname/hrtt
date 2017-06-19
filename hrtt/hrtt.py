@@ -2,6 +2,8 @@ import sys
 import os
 from .scrape import load_accounts
 from .scrape import scrape_from_user
+from .tweet import load_tweets
+import pickle
 
 
 def cleanup():
@@ -20,5 +22,10 @@ def main():
             for x in range(len(acc)):
                 print('Account {}'.format(x+1))
                 scrape_from_user(acc, x)
+        elif sys.argv[1] == 'save':
+            tweets = load_tweets('data/tweet_ids.txt')
+            print(tweets)
+            with open('data/tweets.pickle', 'wb+') as f:
+                pickle.dump(tweets, f)
         else:
             print('Not a recognized argument')

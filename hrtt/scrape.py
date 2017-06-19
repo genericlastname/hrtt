@@ -2,14 +2,7 @@
 # Functions to collect tweets from specific twitter accounts
 
 
-import tweepy
-
-
-# tweepy globals
-_ck = 'wka2iuZW3Aky7SFhwA8PhAGnl'
-_cs = 'Swqq8AgjFRnKTEg3gmyBJDUZ8fnzqdfhfDirhn8owj0czog2vf'
-_ak = '869984091692822528-ykmxl5GO0FnISwSXjLMGmTC6FOvmgkU'
-_as = 'vUR9RmBvmAu5EJI2ijZKHBFfJafMpkI6EoDxulNvsigK5'
+from .globals import _api
 
 
 def load_accounts(path):
@@ -24,21 +17,17 @@ def scrape_from_user(acc, num, path='data/tweet_ids.txt'):
        `path`"""
     print('Collecting tweets from {}'.format(acc[num]))
 
-    auth = tweepy.OAuthHandler(_ck, _cs)
-    auth.set_access_token(_ak, _as)
-    api = tweepy.API(auth)
-
     tweets = []
     new_tweets = []
 
-    new_tweets = api.user_timeline(screen_name=acc[num], count=200)
+    new_tweets = _api.user_timeline(screen_name=acc[num], count=200)
     tweets.extend(new_tweets)
 
     oldest = tweets[-1].id - 1
 
     while len(new_tweets) > 0:
-        new_tweets = api.user_timeline(screen_name=acc[num], count=200,
-                                       max_id=oldest)
+        new_tweets = _api.user_timeline(screen_name=acc[num], count=200,
+                                        max_id=oldest)
         tweets.extend(new_tweets)
         oldest = tweets[-1].id - 1
         print('{} tweets collected so far'.format(len(tweets)), end='\r')
