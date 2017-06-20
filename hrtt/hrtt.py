@@ -14,7 +14,7 @@ def cleanup():
 def main():
     if len(sys.argv) < 2:
         print('Not enough arguments!')
-    elif len(sys.argv) == 2:
+    elif len(sys.argv) >= 2:
         if sys.argv[1] == 'cleanup':
             cleanup()
         elif sys.argv[1] == 'scrape':
@@ -27,5 +27,8 @@ def main():
             print(tweets)
             with open('data/tweets.pickle', 'wb+') as f:
                 pickle.dump(tweets, f)
+        elif sys.argv[1] == 'load':
+            with open('data/tweets.pickle') as f:
+                tweets = pickle.load(f)
         else:
             print('Not a recognized argument')
