@@ -3,6 +3,7 @@ import argparse
 from .scrape import load_accounts
 from .scrape import scrape_from_user
 from .tweet import load_tweets
+from .analyze import filter_tweets
 import pickle
 
 
@@ -30,10 +31,26 @@ def main():
         with open('data/tweets.pickle', 'wb+') as f:
             pickle.dump(tweets, f)
 
-    elif args.command == 'load':
-        with open('data/tweets.pickle', 'rb') as f:
-            tweets = pickle.load(f)
-            print('{} {}'.format(tweets[2].author.name, tweets[2].text))
+    elif args.command == 'filter':
+        pf = open('data/tweets.pickle', 'rb')
+        tweets = pickle.load(pf)
+        pf.close()
+
+        kwf = open('data/keywords.txt')  # keyword file
+        keywords = kwf.readlines()
+        kwf.close()
+
+        filtered = []  # tweets filtered by keywords
+
+        for x in range(len(tweets)):
+            if filter_tweets(tweets[x], keywords):
+                filtered.append(tweets[x])
+                print('Match found for tweet {}.'.format(tweets[x].id_str))
+
+        if len(filtered) > 0:
+            pf = open('data/filtered_tweets.pickle', 'wb+')
+            pickle.dump(filtered, pf)
+            pf.close()
 
 
 # def main():
