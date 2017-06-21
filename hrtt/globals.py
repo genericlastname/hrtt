@@ -13,4 +13,5 @@ _as = 'vUR9RmBvmAu5EJI2ijZKHBFfJafMpkI6EoDxulNvsigK5'
 
 _auth = tweepy.OAuthHandler(_ck, _cs)
 _auth.set_access_token(_ak, _as)
-_api = tweepy.API(_auth, wait_on_rate_limit=True)
+_api = tweepy.API(_auth, wait_on_rate_limit=True,
+                  wait_on_rate_limit_notify=True)
