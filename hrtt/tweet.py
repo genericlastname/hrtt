@@ -2,6 +2,7 @@
 
 
 from .globals import _api
+from tweepy.error import TweepError
 
 
 def load_tweets(path='data/tweet_ids.txt'):
@@ -13,8 +14,12 @@ def load_tweets(path='data/tweet_ids.txt'):
 
         print('{} ids to load.'.format(len(ids)))
         for x in range(len(ids)):
-            obj = _api.get_status(ids[x])
-            status.append(obj)
-            print('{}) Loaded tweet with id: {}'.format(x+1, ids[x]))
+            try:
+                obj = _api.get_status(ids[x])
+                status.append(obj)
+                print('{}) Loaded tweet with id: {}'.format(x+1, ids[x]))
+            except TweepError:
+                print('Error. Continuing.')
+                continue
 
         return status

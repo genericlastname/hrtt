@@ -27,13 +27,13 @@ def main():
 
     elif args.command == 'save':
         tweets = load_tweets('data/tweet_ids.txt')
-        print(tweets)
         with open('data/tweets.pickle', 'wb+') as f:
             pickle.dump(tweets, f)
 
     elif args.command == 'load':
-        with open('data/tweets.pickle') as f:
+        with open('data/tweets.pickle', 'rb') as f:
             tweets = pickle.load(f)
+            print('{} {}'.format(tweets[2].author.name, tweets[2].text))
 
 
 # def main():
