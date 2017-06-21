@@ -46,6 +46,7 @@ def main():
             if filter_tweets(tweets[x], keywords):
                 filtered.append(tweets[x])
                 print('Match found for tweet {}.'.format(tweets[x].id_str))
+                print('Text: {}'.format(tweets[x].text))
 
         if len(filtered) > 0:
             pf = open('data/filtered_tweets.pickle', 'wb+')
