@@ -41,12 +41,12 @@ def main():
         kwf.close()
 
         filtered = []  # tweets filtered by keywords
-
         for x in range(len(tweets)):
-            if filter_tweets(tweets[x], keywords):
-                filtered.append(tweets[x])
-                print('Match found for tweet {}.'.format(tweets[x].id_str))
-                print('Text: {}'.format(tweets[x].text))
+            for y in range(len(keywords)):
+                if filter_tweets(tweets[x], keywords[y]) is True:
+                    filtered.append(tweets[x])
+                    print('Text: {}'.format(tweets[x].text))
+                    break
 
         if len(filtered) > 0:
             pf = open('data/filtered_tweets.pickle', 'wb+')
